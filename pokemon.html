@@ -1,60 +1,58 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #text { 
-        width: 300px;
-        border: 1px solid #ccc;
-      }
-
-      .button {
-        color: #999;
-        background: white;
-        border: solid 1px #ccc;
-        border-radius: 3px;
-        outline: none;
-      }
-
-      .button:hover {
-        background: #999;
-        color: white;
-      }
-
-      #line1, #line2, #line3 {
-        width: 189mm;
-      }
-
-      img {
-        width: 63mm;
-        height: 88mm;
-        vertical-align: bottom;
-        border-radius: 11px;
-      }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <meta http-equiv="Content-Type" content="text/html"/>
   </head>
-  <body onLoad="reflect()">
-    <form>
-      <input type="text" id="text" placeholder="Input image URL" />
-      <input type="button" class="button" value="Reflect" onClick="reflect()" />
-      <input type="reset" class="button" value="Reset" />
-    </form>
-    <div id="line1">
-      <img id="image11" /><img id="image12" /><img id="image13" />
-    </div>
-    <div id="line2">
-      <img id="image21" /><img id="image22" /><img id="image23" />
-    </div>
-    <div id="line3">
-      <img id="image31" /><img id="image32" /><img id="image33" />
-    </div>
-    <script>
-      var defaultImageSrc = 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg';
 
-      function reflect() {
-        var imageSrc = document.getElementById('text').value || defaultImageSrc;
-        document.querySelectorAll('img').forEach(
-          e => e.src = imageSrc
-        );
-      }
-    </script>
+  <style>
+    .link {
+      display: flex;
+    }
+
+    .line {
+      display: flex;
+      width: 189mm;
+    }
+
+    img {
+      width: 63mm;
+      height: 88mm;
+      vertical-align: bottom;
+      border-radius: 11px;
+    }
+  </style>
+
+  <body>
+    <div id="app">
+      <div class="link">
+        <div v-for="image in images">
+          <input v-model="image.link" type="text" />
+        </div>
+      </div>
+      <div v-for="image in images" class="line">
+        <img :src='image.link' />
+        <img :src='image.link' />
+        <img :src='image.link' />
+      </div>  
+    </div>
   </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          images: [
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'}
+          ]
+        }
+      }
+    });
+  </script>
+
 </html>
