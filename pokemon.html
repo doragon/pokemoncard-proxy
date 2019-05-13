@@ -12,18 +12,6 @@
       .input-field {
         display: none;
       }
-
-      .line {
-        display: flex;
-        width: 189mm;
-      }
-
-      img {
-        width: 63mm;
-        height: 88mm;
-        vertical-align: bottom;
-        border-radius: 11px;
-      }
     }
 
     /* 通常時のCSS */
@@ -31,28 +19,32 @@
       .input-field-item {
         display: flex;
       }
+    }
 
-      .line {
-        display: flex;
-        width: 189mm;
-      }
+    .line {
+      display: flex;
+      width: 189mm;
+    }
 
-      img {
-        width: 63mm;
-        height: 88mm;
-        vertical-align: bottom;
-        border-radius: 11px;
-      }
+    img {
+      width: 63mm;
+      height: 88mm;
+      vertical-align: bottom;
+      border-radius: 11px;
     }
   </style>
 
   <body>
     <div id="app">
       <div class="input-field">
+        <a href="https://www.pokemon-card.com/card-search/">ポケモン公式のカード検索リンク</a>
         <div v-for="(image, index) in images" class="input-field-item">
           <input v-model="image.link" type="text" />
-          <button v-on:click="inputUrl(index, 'https://www.pokemon-card.com/assets/images/card_images/large/SMP/036431_P_JIRACHI.jpg')">ジラーチ(ねがいぼし)</button>
-          <button v-on:click="inputUrl(index, 'https://www.pokemon-card.com/assets/images/card_images/large/SM10a/036586_T_RISETTOSUTANPU.jpg')">リセットスタンプ</button>
+          <select v-model="image.link">
+            <option v-for="card in cards" v-bind:value="card.link">
+              {{ card.name }}
+            </option>
+          </select>
         </div>
       </div>
       <div v-for="image in images" class="line">
@@ -69,6 +61,15 @@
       el: "#app",
       data() {
         return {
+          cards: [
+            // pokemon
+            {name: 'ジラーチ(ねがいぼし)', link: 'https://www.pokemon-card.com/assets/images/card_images/large/SMP/036431_P_JIRACHI.jpg'},
+            // goods
+            {name: 'リセットスタンプ', link: 'https://www.pokemon-card.com/assets/images/card_images/large/SM10a/036586_T_RISETTOSUTANPU.jpg'},
+            // support
+            // stadium
+            // energy
+          ],
           images: [
             {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
             {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
