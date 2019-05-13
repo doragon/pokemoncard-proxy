@@ -23,6 +23,8 @@
 
     .line {
       display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
       width: 189mm;
     }
 
@@ -36,9 +38,56 @@
 
   <body>
     <div id="app">
+
       <div class="input-field">
         <a href="https://www.pokemon-card.com/card-search/">ポケモン公式のカード検索リンク</a>
-        <div v-for="(image, index) in images" class="input-field-item">
+
+        <div class="input-field-item">
+          <div>分割数: </div>
+          <select v-model="divisionNumber">
+            <option v-for="num in 9">
+              {{ num }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="getTypeNumber() === '9'" v-for="(image, index) in images_9" class="input-field-item">
+          <input v-model="image.link" type="text" />
+          <select v-model="image.link">
+            <option v-for="card in cards" v-bind:value="card.link">
+              {{ card.name }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="getTypeNumber() === '2'" v-for="(image, index) in images_2" class="input-field-item">
+          <input v-model="image.link" type="text" />
+          <select v-model="image.link">
+            <option v-for="card in cards" v-bind:value="card.link">
+              {{ card.name }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="getTypeNumber() === '3'" v-for="(image, index) in images_3" class="input-field-item">
+          <input v-model="image.link" type="text" />
+          <select v-model="image.link">
+            <option v-for="card in cards" v-bind:value="card.link">
+              {{ card.name }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="getTypeNumber() === '5'" v-for="(image, index) in images_5" class="input-field-item">
+          <input v-model="image.link" type="text" />
+          <select v-model="image.link">
+            <option v-for="card in cards" v-bind:value="card.link">
+              {{ card.name }}
+            </option>
+          </select>
+        </div>
+
+        <div v-if="getTypeNumber() === '1'" v-for="(image, index) in images_1" class="input-field-item">
           <input v-model="image.link" type="text" />
           <select v-model="image.link">
             <option v-for="card in cards" v-bind:value="card.link">
@@ -47,11 +96,33 @@
           </select>
         </div>
       </div>
-      <div v-for="image in images" class="line">
-        <img :src='image.link' />
-        <img :src='image.link' />
-        <img :src='image.link' />
+
+      <div v-if="getTypeNumber() === '9'" class="line">
+        <img v-for="image in images_9" :src='image.link' />
       </div>  
+
+      <div v-if="getTypeNumber() === '2'" class="line">
+        <img v-for="n in Number(divisionNumber)" :src='images_2[0].link' />
+        <img v-for="n in (9 - Number(divisionNumber))" :src='images_2[1].link' />
+      </div>  
+
+      <div v-if="getTypeNumber() === '3'" class="line">
+        <img v-for="n in Number(divisionNumber)" :src='images_3[0].link' />
+        <img v-for="n in Number(divisionNumber)" :src='images_3[1].link' />
+        <img v-for="n in (9 - Number(divisionNumber) * 2)" :src='images_3[2].link' />
+      </div>
+
+      <div v-if="getTypeNumber() === '5'" class="line">
+        <img v-for="n in 2" :src='images_5[0].link' />
+        <img v-for="n in 2" :src='images_5[1].link' />
+        <img v-for="n in 2" :src='images_5[2].link' />
+        <img v-for="n in 2" :src='images_5[3].link' />
+        <img :src='images_5[4].link' />
+      </div>
+
+      <div v-if="getTypeNumber() === '1'" class="line">
+        <img v-for="n in 9" :src='images_1[0].link' />
+      </div>
     </div>
   </body>
 
@@ -74,16 +145,63 @@
             // stadium
             // energy
           ],
-          images: [
+          divisionNumber: '3',
+          images_9: [
             {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
             {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
-            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'}
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+          ],
+          images_2: [
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+          ],
+          images_3: [
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+          ],
+          images_5: [
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
+          ],
+          images_1: [
+            {link: 'https://www.pokemon-card.com/assets/images/noimage/poke_ura.jpg'},
           ]
         }
       },
       methods: {
-        inputUrl: function (index, url) {
-          this.images[index].link = url
+        getTypeNumber: function () {
+          if (this.divisionNumber === '9') {
+            // 9分割(各1枚)
+            return '9';
+          } else if (this.divisionNumber === '8'
+            || this.divisionNumber === '7'
+            || this.divisionNumber === '6'
+            || this.divisionNumber === '5'
+          ) {
+            // 2分割([8,1]枚 or [7,2]枚 or [6,3]枚 or [5,4]枚)
+            return '2';
+          } else if (this.divisionNumber === '4'
+            || this.divisionNumber === '3'
+          ) {
+            // 3分割([4,4,1]枚 or [3,3,3]枚)
+            return '3';
+          } else if (this.divisionNumber === '2') {
+            // 5分割([2,2,2,2,1]枚)
+            return '5';
+          } else if (this.divisionNumber === '1') {
+            // 1分割(9枚全て同一)
+            return '1';
+          }
         }
       }
     });
