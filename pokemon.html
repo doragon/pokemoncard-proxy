@@ -34,6 +34,13 @@
       vertical-align: bottom;
       border-radius: 11px;
     }
+
+    .break {
+      width: 88mm;
+      height: 63mm;
+      transform: rotate(90deg);
+      margin: 12.3mm -12.5mm 12.3mm -12.6mm;
+    }
   </style>
 
   <body>
@@ -98,30 +105,30 @@
       </div>
 
       <div v-if="getTypeNumber() === '9'" class="line">
-        <img v-for="image in images_9" :src='image.link' />
+        <img v-for="image in images_9" :src='image.link' v-bind:class="{ break: isBreak(image.link) }" />
       </div>  
 
       <div v-if="getTypeNumber() === '2'" class="line">
-        <img v-for="n in Number(divisionNumber)" :src='images_2[0].link' />
-        <img v-for="n in (9 - Number(divisionNumber))" :src='images_2[1].link' />
+        <img v-for="n in Number(divisionNumber)" :src='images_2[0].link' v-bind:class="{ break: isBreak(images_2[0].link) }" />
+        <img v-for="n in (9 - Number(divisionNumber))" :src='images_2[1].link' v-bind:class="{ break: isBreak(images_2[1].link) }" />
       </div>  
 
       <div v-if="getTypeNumber() === '3'" class="line">
-        <img v-for="n in Number(divisionNumber)" :src='images_3[0].link' />
-        <img v-for="n in Number(divisionNumber)" :src='images_3[1].link' />
-        <img v-for="n in (9 - Number(divisionNumber) * 2)" :src='images_3[2].link' />
+        <img v-for="n in Number(divisionNumber)" :src='images_3[0].link' v-bind:class="{ break: isBreak(images_3[0].link) }" />
+        <img v-for="n in Number(divisionNumber)" :src='images_3[1].link' v-bind:class="{ break: isBreak(images_3[1].link) }" />
+        <img v-for="n in (9 - Number(divisionNumber) * 2)" :src='images_3[2].link' v-bind:class="{ break: isBreak(images_3[2].link) }" />
       </div>
 
       <div v-if="getTypeNumber() === '5'" class="line">
-        <img v-for="n in 2" :src='images_5[0].link' />
-        <img v-for="n in 2" :src='images_5[1].link' />
-        <img v-for="n in 2" :src='images_5[2].link' />
-        <img v-for="n in 2" :src='images_5[3].link' />
-        <img :src='images_5[4].link' />
+        <img v-for="n in 2" :src='images_5[0].link' v-bind:class="{ break: isBreak(images_5[0].link) }" />
+        <img v-for="n in 2" :src='images_5[1].link' v-bind:class="{ break: isBreak(images_5[1].link) }" />
+        <img v-for="n in 2" :src='images_5[2].link' v-bind:class="{ break: isBreak(images_5[2].link) }" />
+        <img v-for="n in 2" :src='images_5[3].link' v-bind:class="{ break: isBreak(images_5[3].link) }" />
+        <img :src='images_5[4].link' v-bind:class="{ break: isBreak(images_5[4].link) }" />
       </div>
 
       <div v-if="getTypeNumber() === '1'" class="line">
-        <img v-for="n in 9" :src='images_1[0].link' />
+        <img v-for="n in 9" :src='images_1[0].link' v-bind:class="{ break: isBreak(images_1[0].link) }" />
       </div>
     </div>
   </body>
@@ -156,6 +163,8 @@
             // energy
             {name: '超ブーストエネルギー', link: 'https://www.pokemon-card.com/assets/images/card_images/large/SM5M/034513_E_CHOUBUSUTOENERUGI.jpg'},
             {name: 'ビーストエネルギー', link: 'https://www.pokemon-card.com/assets/images/card_images/large/SM8b/035607_E_BISUTOENERUGI.jpg'},
+            // EXTRA: BREAK
+            {name: 'オーロットBREAK', link: 'https://www.pokemon-card.com/assets/images/card_images/legend/XY/033607_P_OROTTOBREAK.jpg'},
           ],
           divisionNumber: '3',
           images_9: [
@@ -214,6 +223,12 @@
             // 1分割(9枚全て同一)
             return '1';
           }
+        },
+        isBreak: function (link) {
+          if (link === undefined) {
+            return false;
+          }
+          return link.indexOf('BREAK') != -1;
         }
       }
     });
